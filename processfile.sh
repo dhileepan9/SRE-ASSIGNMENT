@@ -1,9 +1,9 @@
 #!/bin/bash
-
-DOMAINLIST=$(cut -d';' -f 2 domainstatus.log | uniq)
+LOGFILE=$1
+DOMAINLIST=$(cut -d';' -f 2 $LOGFILE | uniq)
 
 for domain in $DOMAINLIST; do
-    statuslist=$(awk -F';' '/'$domain'/ {print $1}' domainstatus.log)
+    statuslist=$(awk -F';' '/'$domain'/ {print $1}' $LOGFILE)
     STATUSARRAY=($statuslist)
     CRITICALCHECK=-1 #if status code 255 not found it will remain -1
     TRANSITIONCHECK=-1 #if transition to status code 44 not happens this will remain -1
